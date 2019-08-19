@@ -2,9 +2,7 @@ package ossman.simulaciones.detectordehumedad.comunicaciones;
 
 import com.curso_simulaciones.comunicaciones.bluetooth.ClienteBluetooth;
 
-public class HiloCliente
-        extends ClienteBluetooth
-        implements Runnable {
+public class HiloCliente extends ClienteBluetooth implements Runnable {
 
 
     private  Thread hilo;

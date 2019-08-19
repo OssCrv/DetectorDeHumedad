@@ -1,5 +1,6 @@
 package ossman.simulaciones.detectordehumedad.actividades_secundarias;
 
+import android.app.Activity;
 import android.content.Context;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
@@ -19,17 +20,17 @@ import ossman.simulaciones.detectordehumedad.datos.AlmacenDatosRAM;
 import ossman.simulaciones.detectordehumedad.utilidades.DialogoSalir;
 
 public class ActividadGrafica
-        extends AppCompatActivity
+        extends Activity
         implements Runnable {
 
 
     private int tamanoLetraResolucionIncluida;
     private int COLOR_1= Color.rgb(220, 156, 80);
     private Button botonEmpezar, botonDetener,botonGuardar;
-    private GraficadorXY grafica;
+    private GraficadorXY graficaT, graficaH;
     private int periodoMuestreo = 100;//ms
     private float tiempo;
-    private float medida;
+    private float medidaH,medidaT;
     private int numeroDatos;
     // hilo
     private Thread hilo;
@@ -87,7 +88,9 @@ public class ActividadGrafica
         botonGuardar.getBackground().setColorFilter(COLOR_1, PorterDuff.Mode.MULTIPLY);
         botonGuardar.setEnabled(false);
 
-        grafica = new GraficadorXY(this);
+        graficaH = new GraficadorXY(this);
+        graficaT = new GraficadorXY(this);
+
 
 
     }
@@ -128,9 +131,11 @@ public class ActividadGrafica
         linearPrincipal.addView(linearArriba);
         linearPrincipal.addView(linearAbajo);
 
-
+        LinearLayout.LayoutParams parametrosPegadoGrafica = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,0);
+        parametrosPegadoGrafica.weight = 5.0f;
         //pegar gráfica a columna izquierda
-        linearArriba.addView(grafica);
+        linearArriba.addView(graficaH,parametrosPegadoGrafica);
+        linearArriba.addView(graficaT,parametrosPegadoGrafica);
 
 
         //pegar botones a la columna derecha
@@ -158,7 +163,8 @@ public class ActividadGrafica
                 ON = true;
                 numeroDatos=0;
                 tiempo=0f;
-                grafica.borrarDatos();
+                graficaH.borrarDatos();
+                graficaT.borrarDatos();
                 manejadorArchivos.borrarDatos();
                 empezar();
                 botonEmpezar.setEnabled(false);
@@ -177,22 +183,15 @@ public class ActividadGrafica
                 botonEmpezar.setEnabled(true);
                 botonDetener.setEnabled(false);
                 botonGuardar.setEnabled(true);
-
-
             }
         });
 
-        //evento activar
         botonGuardar.setOnClickListener(new View.OnClickListener() {
 
             public void onClick(View v) {
-
                 guardar();
-
             }
         });
-
-
     }
     private void guardar() {
 
@@ -241,11 +240,13 @@ public class ActividadGrafica
         periodoMuestreo=AlmacenDatosRAM.periodoMuestreo;
         numeroDatos=numeroDatos+1;
         tiempo=tiempo+periodoMuestreo;
-        medida=(float)AlmacenDatosRAM.datoActual;
-        grafica.setEtiquetas("Tiempo (s)", AlmacenDatosRAM.unidades1);
-        grafica.setEtiquetas("Tiempo (s)", AlmacenDatosRAM.unidades2);
-        grafica.enviarDatos(0.001f * tiempo, medida);
-        manejadorArchivos.llenarDatos(0.001f * tiempo, AlmacenDatosRAM.datoActual);
+        medidaH=(float)AlmacenDatosRAM.datoActualH;
+        medidaT=(float)AlmacenDatosRAM.datoActualT;
+        graficaH.setEtiquetas("Tiempo (s)", AlmacenDatosRAM.unidades1);
+        graficaT.setEtiquetas("Tiempo (s)", AlmacenDatosRAM.unidades2);
+        graficaT.enviarDatos(0.001f * tiempo, medidaT);
+        graficaH.enviarDatos(0.001f * tiempo, medidaH);
+        manejadorArchivos.llenarDatos(0.001f * tiempo, AlmacenDatosRAM.datoActualH);
 
     }
     protected void onPause() {

@@ -11,17 +11,19 @@ public class GaugeCompuesto extends View {
 
 
     private float minimo=-0;
-    private float  maximo=100f;
+    private float maximo=100f;
+    private float minimo2=15;
+    private float maximo2=40f;
     private float medida1=70.0f;
     private float medida2=70.0f;
     private String unidades1="UNIDADES";
     private String unidades2="UNIDADES";
-    private int colorPrimerTercio1= Color.rgb(200,200,0);
-    private int colorSegundoTercio1= Color.rgb(0,180,0);
+    private int colorPrimerTercio1= Color.BLUE;
+    private int colorSegundoTercio1= Color.GREEN;
     private int colorTercerTercio1= Color.RED;
 
-    private int colorPrimerTercio2= Color.rgb(200,200,0);
-    private int colorSegundoTercio2= Color.rgb(0,180,0);
+    private int colorPrimerTercio2= Color.BLUE;
+    private int colorSegundoTercio2= Color.GREEN;
     private int colorTercerTercio2= Color.RED;
     private int colorLineas=Color.BLACK;
     private int colorFondo1=Color.WHITE;
@@ -31,45 +33,27 @@ public class GaugeCompuesto extends View {
 
 
     public GaugeCompuesto(Context context){
-
         super(context);
 
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.HONEYCOMB) {
             this.setLayerType(View.LAYER_TYPE_SOFTWARE, null);
-
         }
 
     }
-    public void setRango1(float minimo, float maximo){
+
+    public void setRango(float minimo, float maximo){
 
         this.minimo=minimo;
         this.maximo=maximo;
 
     }
-    public void setRango2(float minimo, float maximo){
 
-        this.minimo=minimo;
-        this.maximo=maximo;
+    public void setMedidas(float medida1, float medida2) {
 
+        this.medida1 = medida1;
+        this.medida2 = medida2;
     }
-    public void setMedida1(float medida){
 
-        this.medida1=medida1;
-
-    }
-    public void setMedida2(float medida){
-
-        this.medida2=medida2;
-
-    }
-    public float getMedida1(){
-
-        return medida1;
-    }
-    public float getMedida2(){
-
-        return medida2;
-    }
     public void setUnidades1 (String unidades1){
 
         this.unidades1=unidades1;
@@ -142,7 +126,7 @@ public class GaugeCompuesto extends View {
 
 
         }
-// dibujar Gauge1 grande
+        // dibujar Gauge1 grande
         canvas.translate(0.5f*ancho,0.5f*alto);
         Paint pincel = new Paint();
         //evita efecto sierra
@@ -271,10 +255,10 @@ public class GaugeCompuesto extends View {
 
         invalidate();//para animación
 
-// Gauge pequeño
+        // Gauge pequeño
         canvas.save();
         canvas.translate(0.5f*ancho,0.63f*alto);
-//evita efecto sierra
+        //evita efecto sierra
         pincel.setAntiAlias(true);
         //tamaño texto
         pincel.setTextSize(0.04f*largo);
@@ -340,8 +324,8 @@ public class GaugeCompuesto extends View {
 
             //marcas
             // Centrar números con las divisiones grandes
-            int valorIncrementoMarcas= (int)((maximo-minimo)/5f);
-            int valorMarca= (int)(minimo +valorIncrementoMarcas*i);
+            int valorIncrementoMarcas= (int)((maximo2-minimo2)/5f);
+            int valorMarca= (int)(minimo2 +valorIncrementoMarcas*i);
             String numero=""+valorMarca;
             anchoCadenaNumero = pincel.measureText(numero);
             float posicionXNumero=-0.5f*anchoCadenaNumero;
@@ -371,11 +355,13 @@ public class GaugeCompuesto extends View {
         }
 
         //Dibujar aguja
+        float angulo_rotacion_medida2=235+(250f/(maximo2-minimo2))*(medida2-minimo2);
+
         pincel.setStrokeWidth(0.005f*largo);
         pincel.setColor(Color.RED);
-        canvas.rotate(angulo_rotacion_medida, 0, 0);
+        canvas.rotate(angulo_rotacion_medida2, 0, 0);
         canvas.drawLine(0, -posicionY, 0, 0, pincel);
-        canvas.rotate(-angulo_rotacion_medida, 0, 0);
+        canvas.rotate(-angulo_rotacion_medida2, 0, 0);
         pincel.setStyle(Paint.Style.FILL);
         canvas.drawCircle(0, 0, (float) (0.1 * indent), pincel);
         //unidades

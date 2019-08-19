@@ -18,7 +18,9 @@ public class AlmacenDatosRAM {
     public static String unidades1 ="%HR";
     public static String unidades2 ="°C";
     //sobre actualización de datos
-    public static double datoActual = 0.0;
+    public static double datoActualH = 0.0;
+    public static double datoActualT = 0.0;
+
 
 }
 

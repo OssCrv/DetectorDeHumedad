@@ -1,5 +1,6 @@
 package ossman.simulaciones.detectordehumedad.actividades_secundarias;
 
+import android.app.Activity;
 import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -11,13 +12,12 @@ import android.widget.TextView;
 
 import ossman.simulaciones.detectordehumedad.datos.AlmacenDatosRAM;
 
-public class ActividadConfiguracion
-        extends AppCompatActivity{
+public class ActividadConfiguracion extends Activity {
 
         private EditText editTextMinimo, editTextMaximo, editTextUnidades1,editTextUnidades2, editTextPeriodoMuestreo,
                 editTextNumeroDatos;
 
-        private TextView textMinimo, textMaximo, textUnidades, textPeriodoMuestreo, textNumeroDatos,
+        private TextView textMinimo, textMaximo, textUnidadesH, textUnidadesT, textPeriodoMuestreo, textNumeroDatos,
                 espacioUno, espacioDos;
 
         private int tamanoLetraResolucionIncluida;
@@ -63,12 +63,19 @@ public class ActividadConfiguracion
             textMaximo.setText("  VALOR MÁXIMO");
             textMaximo.setTextColor(Color.BLACK);
 
-            textUnidades = new TextView(this);
-            textUnidades.setGravity(Gravity.FILL_VERTICAL);
-            textUnidades.setBackgroundColor(Color.GREEN);
-            textUnidades.setTextSize(tamanoLetraResolucionIncluida);
-            textUnidades.setText("  Magnitud (unidades)");
-            textUnidades.setTextColor(Color.BLACK);
+            textUnidadesH = new TextView(this);
+            textUnidadesH.setGravity(Gravity.FILL_VERTICAL);
+            textUnidadesH.setBackgroundColor(Color.GREEN);
+            textUnidadesH.setTextSize(tamanoLetraResolucionIncluida);
+            textUnidadesH.setText("  Magnitud Humedad (unidades)");
+            textUnidadesH.setTextColor(Color.BLACK);
+
+            textUnidadesT = new TextView(this);
+            textUnidadesT.setGravity(Gravity.FILL_VERTICAL);
+            textUnidadesT.setBackgroundColor(Color.GREEN);
+            textUnidadesT.setTextSize(tamanoLetraResolucionIncluida);
+            textUnidadesT.setText("  Magnitud Temperatura (unidades)");
+            textUnidadesT.setTextColor(Color.BLACK);
 
             textPeriodoMuestreo = new TextView(this);
             textPeriodoMuestreo.setGravity(Gravity.FILL_VERTICAL);
@@ -165,13 +172,18 @@ public class ActividadConfiguracion
             linearFilaSiete.setOrientation(LinearLayout.HORIZONTAL);
             //para definir el peso de los elementos que se agregaran a esta fila
             linearFilaSiete.setWeightSum(3.0f);
-
+            //fila ocho
+            LinearLayout linearFilaOcho = new LinearLayout(this);
+            linearFilaCinco.setOrientation(LinearLayout.HORIZONTAL);
+            //para definir el peso de los elementos que se agregaran a esta fila
+            linearFilaCinco.setWeightSum(3.0f);
 
             linearLayoutPrincipal.addView(linearFilaUno);
             linearLayoutPrincipal.addView(linearFilaDos);
             linearLayoutPrincipal.addView(linearFilaTres);
             linearLayoutPrincipal.addView(linearFilaCuatro);
             linearLayoutPrincipal.addView(linearFilaCinco);
+            linearLayoutPrincipal.addView(linearFilaOcho);
             linearLayoutPrincipal.addView(linearFilaSeis);
             linearLayoutPrincipal.addView(linearFilaSiete);
 
@@ -208,11 +220,14 @@ public class ActividadConfiguracion
             //pegado de elementos a fila cinco
             LinearLayout.LayoutParams parametrosPegadoElementosFilaCincoIzquierda = new LinearLayout.LayoutParams(0, android.view.ViewGroup.LayoutParams.MATCH_PARENT);
             parametrosPegadoElementosFilaCincoIzquierda.weight = 2.0f;
-            linearFilaCinco.addView(textUnidades,parametrosPegadoElementosFilaCincoIzquierda);
+            linearFilaCinco.addView(textUnidadesH,parametrosPegadoElementosFilaCincoIzquierda);
+
 
             LinearLayout.LayoutParams parametrosPegadoElementosFilaCincoDerecha = new LinearLayout.LayoutParams(0, android.view.ViewGroup.LayoutParams.MATCH_PARENT);
             parametrosPegadoElementosFilaCincoDerecha.weight = 1.0f;
             linearFilaCinco.addView(editTextUnidades1,parametrosPegadoElementosFilaCincoDerecha);
+            linearFilaOcho.addView(textUnidadesT,parametrosPegadoElementosFilaCincoIzquierda);
+            linearFilaOcho.addView(editTextUnidades2,parametrosPegadoElementosFilaCincoDerecha);
 
 
             //pegado de elementos a fila seis
@@ -243,7 +258,7 @@ public class ActividadConfiguracion
 
             AlmacenDatosRAM.cofigurar=true;
             AlmacenDatosRAM.unidades1=editTextUnidades1.getText().toString();
-            AlmacenDatosRAM.unidades2=editTextUnidades1.getText().toString();
+            AlmacenDatosRAM.unidades2=editTextUnidades2.getText().toString();
             String valorMinimo = editTextMinimo.getText().toString();
             AlmacenDatosRAM.minimo = Integer.parseInt(valorMinimo);
 

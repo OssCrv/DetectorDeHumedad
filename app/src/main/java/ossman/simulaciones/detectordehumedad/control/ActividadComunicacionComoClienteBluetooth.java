@@ -1,6 +1,7 @@
 package ossman.simulaciones.detectordehumedad.control;
 
 import android.Manifest;
+import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
@@ -8,8 +9,8 @@ import android.graphics.PorterDuff;
 import android.os.Build;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.View;
@@ -25,8 +26,7 @@ import ossman.simulaciones.detectordehumedad.actividades_secundarias.ActividadIn
 import ossman.simulaciones.detectordehumedad.comunicaciones.HiloCliente;
 import ossman.simulaciones.detectordehumedad.datos.AlmacenDatosRAM;
 
-public class ActividadComunicacionComoClienteBluetooth
-        extends AppCompatActivity {
+public class ActividadComunicacionComoClienteBluetooth extends Activity {
 
     private ImageView imagen;
     private Button botonConectar, botonContinuar,botonBuscar;
@@ -304,14 +304,14 @@ public class ActividadComunicacionComoClienteBluetooth
         recDataString.append(cadena_nuevo_dato);
 
         int endOfLineIndex = recDataString.indexOf(";");
-        String dato = "";
-
+        String datoT = "";
+        String datoH = "";
         if (endOfLineIndex > 0) {
+            int hDataIndex = recDataString.indexOf("T") + 1;
 
-
-            dato= recDataString.substring(0, endOfLineIndex);
-
-            almacenarDatoRam(dato);
+            datoH= recDataString.substring(1, 6);
+            datoT= recDataString.substring(7,12);
+            almacenarDatoRam(datoH,datoT);
 
 
         }
@@ -321,16 +321,19 @@ public class ActividadComunicacionComoClienteBluetooth
 
 
     }
-    private void almacenarDatoRam(String str) {
+    private void almacenarDatoRam(String h, String t) {
 
-        double dato = 0.0;
+        double datoH = 0.0;
+        double datoT = 0.0;
         boolean esNumeroDato = true;
 
-        String cadena_numero_dato = str;
+        String humedad = h;
+        String temperatura = t;
 
         //solo si el dato es válido
         try {
-            dato = new Double(cadena_numero_dato).doubleValue();
+            datoH = new Double(humedad).doubleValue();
+            datoT = new Double(temperatura).doubleValue();
 
         } catch (NumberFormatException ex) {
             //la cadena recibida no es un número
@@ -340,7 +343,8 @@ public class ActividadComunicacionComoClienteBluetooth
         //Exportar los datos al almacén y actualizar vista
         if (esNumeroDato == true) {
 
-            AlmacenDatosRAM.datoActual = dato;
+            AlmacenDatosRAM.datoActualH = datoH;
+            AlmacenDatosRAM.datoActualT = datoT;
 
 
         }
@@ -350,7 +354,8 @@ public class ActividadComunicacionComoClienteBluetooth
         hilo.detener();
         if(hiloCliente!=null)
             hiloCliente.terminarComunicacionConServidor();
-        AlmacenDatosRAM.datoActual=0.0;
+        AlmacenDatosRAM.datoActualH = 0.0;
+        AlmacenDatosRAM.datoActualT = 0.0;
         finish();
 
     }

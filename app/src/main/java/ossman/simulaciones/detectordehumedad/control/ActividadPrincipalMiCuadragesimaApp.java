@@ -1,5 +1,6 @@
 package ossman.simulaciones.detectordehumedad.control;
 
+import android.app.Activity;
 import android.bluetooth.BluetoothAdapter;
 import android.content.Intent;
 import android.graphics.Color;
@@ -21,8 +22,7 @@ import java.io.File;
 import ossman.simulaciones.detectordehumedad.R;
 import ossman.simulaciones.detectordehumedad.datos.AlmacenDatosRAM;
 
-public class ActividadPrincipalMiCuadragesimaApp
-        extends AppCompatActivity {
+public class ActividadPrincipalMiCuadragesimaApp extends Activity {
 
     private ImageView imagen;
     private Button botonEmpezar;

@@ -1,5 +1,6 @@
 package ossman.simulaciones.detectordehumedad.actividades_secundarias;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
@@ -16,7 +17,7 @@ import android.widget.LinearLayout;
 import ossman.simulaciones.detectordehumedad.datos.AlmacenDatosRAM;
 import ossman.simulaciones.detectordehumedad.instrumento_virtual.GaugeCompuesto;
 
-public class ActividadInstrumentoVirtual extends AppCompatActivity implements Runnable{
+public class ActividadInstrumentoVirtual extends Activity implements Runnable{
 
     private GaugeCompuesto tacometro;
     private Button botonGrafica,botonTabla,botonConfigurar;
@@ -26,19 +27,11 @@ public class ActividadInstrumentoVirtual extends AppCompatActivity implements Ru
 
     public void onCreate(Bundle icicle) {
         super.onCreate(icicle);
-
         gestionandoResolucion();
-
         creacionElementosGUI();
-
         setContentView(crearGUI());
-
         eventos();
-
-
         arrancar(this);
-
-
     }
     private void gestionandoResolucion(){
 
@@ -166,6 +159,8 @@ public class ActividadInstrumentoVirtual extends AppCompatActivity implements Ru
 
         hilo = new Thread(this);
         hilo.start();
+
+
     }
     public void detener() {
 
@@ -179,8 +174,7 @@ public class ActividadInstrumentoVirtual extends AppCompatActivity implements Ru
 
                 Thread.sleep(AlmacenDatosRAM.periodoMuestreo);
                 //Cargar datos al almacen de datos
-                tacometro.setMedida1((float)AlmacenDatosRAM.datoActual);
-
+                tacometro.setMedidas((float)AlmacenDatosRAM.datoActualH, (float)AlmacenDatosRAM.datoActualT);
 
             } catch (InterruptedException e) {
             }
@@ -192,7 +186,9 @@ public class ActividadInstrumentoVirtual extends AppCompatActivity implements Ru
         super.onResume();
         tacometro.setUnidades1(AlmacenDatosRAM.unidades1);
         tacometro.setUnidades2(AlmacenDatosRAM.unidades2);
-        tacometro.setRango1(AlmacenDatosRAM.minimo,AlmacenDatosRAM.maximo);
+        tacometro.setRango(AlmacenDatosRAM.minimo,AlmacenDatosRAM.maximo);
+        tacometro.setMedidas((float)AlmacenDatosRAM.datoActualH, (float)AlmacenDatosRAM.datoActualT);
+
 
     }
     protected void onPause() {

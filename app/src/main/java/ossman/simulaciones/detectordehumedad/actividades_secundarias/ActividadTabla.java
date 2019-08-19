@@ -1,5 +1,6 @@
 package ossman.simulaciones.detectordehumedad.actividades_secundarias;
 
+import android.app.Activity;
 import android.content.Context;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
@@ -19,7 +20,7 @@ import com.curso_simulaciones.instruments.tabla.TablaSimple;
 import ossman.simulaciones.detectordehumedad.datos.AlmacenDatosRAM;
 import ossman.simulaciones.detectordehumedad.utilidades.DialogoSalir;
 
-public class ActividadTabla extends AppCompatActivity {
+public class ActividadTabla extends Activity {
 
 
     private Button botonEmpezar, botonGuardar;
@@ -300,13 +301,13 @@ public class ActividadTabla extends AppCompatActivity {
 
             periodoMuestreo=AlmacenDatosRAM.periodoMuestreo;
             numero_datos=numero_datos+1;
-            medida=(float)AlmacenDatosRAM.datoActual;
+            medida=(float)AlmacenDatosRAM.datoActualH;
             //desplegar con máximo dos cifras decimales el tiempo
             float valor_tiempo=(float)(Math.round(0.001f * tiempo * 100.0) / 100.0d);
             tabla.setEtiquetaColumnas("Tiempo (s)", AlmacenDatosRAM.unidades1);
             tabla.setEtiquetaColumnas("Tiempo (s)", AlmacenDatosRAM.unidades2);
             tabla.enviarDatos(valor_tiempo, medida);
-            manejador_archivos.llenarDatos(valor_tiempo, AlmacenDatosRAM.datoActual);
+            manejador_archivos.llenarDatos(valor_tiempo, AlmacenDatosRAM.datoActualH);
             tiempo=tiempo+periodoMuestreo;
 
         }

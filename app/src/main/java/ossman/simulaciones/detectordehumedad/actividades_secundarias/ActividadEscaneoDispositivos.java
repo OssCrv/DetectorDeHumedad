@@ -1,5 +1,6 @@
 package ossman.simulaciones.detectordehumedad.actividades_secundarias;
 
+import android.app.Activity;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
@@ -7,8 +8,7 @@ import com.curso_simulaciones.comunicaciones.bluetooth.ScannerBluetooth;
 
 import ossman.simulaciones.detectordehumedad.datos.AlmacenDatosRAM;
 
-public class ActividadEscaneoDispositivos
-        extends AppCompatActivity {
+public class ActividadEscaneoDispositivos extends Activity {
 
 
     ScannerBluetooth scanear;
