@@ -27,8 +27,8 @@ public class ActividadTabla extends Activity {
     private int tamano_letra_resolucion_incluida;
     private int COLOR_1= Color.rgb(220, 156, 80);
     private HiloManejadorAnimacion hilo;
-    private TablaSimple tabla;
-    private ManejadorArchivosTXT manejador_archivos;
+    private TablaSimple tablaH, tablaT;
+    private ManejadorArchivosTXT manejador_archivosH, manejador_archivosT;
 
     public void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
@@ -40,7 +40,8 @@ public class ActividadTabla extends Activity {
 
         eventos();
 
-        manejador_archivos = new ManejadorArchivosTXT();
+        manejador_archivosH = new ManejadorArchivosTXT();
+        manejador_archivosT = new ManejadorArchivosTXT();
 
         //para informar cómo se debe pegar el adminitrador de
         //diseño obtenido con el método GUI
@@ -75,7 +76,8 @@ public class ActividadTabla extends Activity {
         botonGuardar.getBackground().setColorFilter(COLOR_1, PorterDuff.Mode.MULTIPLY);
         botonGuardar.setEnabled(false);
 
-        tabla = new TablaSimple(this);
+        tablaH = new TablaSimple(this);
+        tablaT = new TablaSimple(this);
 
 
 
@@ -91,6 +93,7 @@ public class ActividadTabla extends Activity {
 
         //LinearLayout primera fila
         LinearLayout linearLayoutPrimeraFila = new LinearLayout(this);
+        linearLayoutPrimeraFila.setWeightSum(2f);
         linearLayoutPrimeraFila.setOrientation(LinearLayout.VERTICAL);
 
 
@@ -116,7 +119,8 @@ public class ActividadTabla extends Activity {
 
 
         //pegado tabla a primera fila
-        linearLayoutPrimeraFila.addView(tabla);
+        linearLayoutPrimeraFila.addView(tablaH);
+        linearLayoutPrimeraFila.addView(tablaT);
 
 
         //pegado botones segunda fila
@@ -147,8 +151,10 @@ public class ActividadTabla extends Activity {
 
                 } else {
 
-                    tabla.borrar();
-                    manejador_archivos.borrarDatos();
+                    tablaH.borrar();
+                    tablaT.borrar();
+                    manejador_archivosH.borrarDatos();
+                    manejador_archivosT.borrarDatos();
                     botonEmpezar.setText("DETENER");
                     botonGuardar.setEnabled(false);
                     empezar();
@@ -200,7 +206,9 @@ public class ActividadTabla extends Activity {
 
         String carpeta="arduino_android/";
         //código para guardar datos
-        manejador_archivos.guardar(this, carpeta) ;
+        manejador_archivosH.guardar(this, carpeta) ;
+        manejador_archivosT.guardar(this, carpeta) ;
+
 
     }
     protected void onPause() {
@@ -215,7 +223,7 @@ public class ActividadTabla extends Activity {
         private int numero_datos;
         private float tiempo;
         private int periodoMuestreo = 100;//ms
-        private float medida;
+        private float medidaH, medidaT;
         private boolean pausa;
         //create an handler
         private final Handler myHandler = new Handler();
@@ -301,13 +309,17 @@ public class ActividadTabla extends Activity {
 
             periodoMuestreo=AlmacenDatosRAM.periodoMuestreo;
             numero_datos=numero_datos+1;
-            medida=(float)AlmacenDatosRAM.datoActualH;
+            medidaH=(float)AlmacenDatosRAM.datoActualH;
+            medidaT=(float)AlmacenDatosRAM.datoActualH;
+
             //desplegar con máximo dos cifras decimales el tiempo
             float valor_tiempo=(float)(Math.round(0.001f * tiempo * 100.0) / 100.0d);
-            tabla.setEtiquetaColumnas("Tiempo (s)", AlmacenDatosRAM.unidades1);
-            tabla.setEtiquetaColumnas("Tiempo (s)", AlmacenDatosRAM.unidades2);
-            tabla.enviarDatos(valor_tiempo, medida);
-            manejador_archivos.llenarDatos(valor_tiempo, AlmacenDatosRAM.datoActualH);
+            tablaH.setEtiquetaColumnas("Tiempo (s)", AlmacenDatosRAM.unidades1);
+            tablaT.setEtiquetaColumnas("Tiempo (s)", AlmacenDatosRAM.unidades2);
+            tablaH.enviarDatos(valor_tiempo, medidaH);
+            tablaT.enviarDatos(valor_tiempo, medidaT);
+            manejador_archivosH.llenarDatos(valor_tiempo, AlmacenDatosRAM.datoActualH);
+            manejador_archivosT.llenarDatos(valor_tiempo, AlmacenDatosRAM.datoActualT);
             tiempo=tiempo+periodoMuestreo;
 
         }

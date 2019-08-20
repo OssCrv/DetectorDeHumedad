@@ -15,6 +15,8 @@ public class AlmacenDatosRAM {
     public static int nDatos=50;
     public static int maximo=100;
     public static int minimo=0;
+    public static int maximo2=100;
+    public static int minimo2=0;
     public static String unidades1 ="%HR";
     public static String unidades2 ="°C";
     //sobre actualización de datos

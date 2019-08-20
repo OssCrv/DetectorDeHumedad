@@ -186,7 +186,7 @@ public class ActividadInstrumentoVirtual extends Activity implements Runnable{
         super.onResume();
         tacometro.setUnidades1(AlmacenDatosRAM.unidades1);
         tacometro.setUnidades2(AlmacenDatosRAM.unidades2);
-        tacometro.setRango(AlmacenDatosRAM.minimo,AlmacenDatosRAM.maximo);
+        tacometro.setRangos(AlmacenDatosRAM.minimo,AlmacenDatosRAM.maximo,AlmacenDatosRAM.minimo2,AlmacenDatosRAM.maximo2);
         tacometro.setMedidas((float)AlmacenDatosRAM.datoActualH, (float)AlmacenDatosRAM.datoActualT);
 
 

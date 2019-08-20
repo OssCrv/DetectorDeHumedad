@@ -41,10 +41,12 @@ public class GaugeCompuesto extends View {
 
     }
 
-    public void setRango(float minimo, float maximo){
+    public void setRangos(float minimo, float maximo, float minimo2, float maximo2){
 
         this.minimo=minimo;
         this.maximo=maximo;
+        this.minimo2=minimo2;
+        this.maximo2=maximo2;
 
     }
 

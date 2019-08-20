@@ -37,7 +37,7 @@ public class ActividadGrafica
     private boolean ON=false;
 
     //Manejo de archivos
-    private ManejadorArchivosTXT manejadorArchivos;
+    private ManejadorArchivosTXT manejadorArchivosH, manejadorArchivosT;
 
     public void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
@@ -50,7 +50,8 @@ public class ActividadGrafica
 
         eventos();
 
-        manejadorArchivos = new ManejadorArchivosTXT();
+        manejadorArchivosH = new ManejadorArchivosTXT();
+        manejadorArchivosT = new ManejadorArchivosTXT();
 
         //para informar cómo se debe pegar el adminitrador de
         //diseño obtenido con el método GUI
@@ -165,7 +166,8 @@ public class ActividadGrafica
                 tiempo=0f;
                 graficaH.borrarDatos();
                 graficaT.borrarDatos();
-                manejadorArchivos.borrarDatos();
+                manejadorArchivosH.borrarDatos();
+                manejadorArchivosT.borrarDatos();
                 empezar();
                 botonEmpezar.setEnabled(false);
                 botonDetener.setEnabled(true);
@@ -197,7 +199,9 @@ public class ActividadGrafica
 
         String carpeta="arduino_android/";
         //código para guardar datos
-        manejadorArchivos.guardar(this, carpeta) ;
+        manejadorArchivosH.guardar(this, carpeta) ;
+        manejadorArchivosT.guardar(this, carpeta) ;
+
 
     }
     private void empezar(){
@@ -246,7 +250,9 @@ public class ActividadGrafica
         graficaT.setEtiquetas("Tiempo (s)", AlmacenDatosRAM.unidades2);
         graficaT.enviarDatos(0.001f * tiempo, medidaT);
         graficaH.enviarDatos(0.001f * tiempo, medidaH);
-        manejadorArchivos.llenarDatos(0.001f * tiempo, AlmacenDatosRAM.datoActualH);
+        manejadorArchivosH.llenarDatos(0.001f * tiempo, AlmacenDatosRAM.datoActualH);
+        manejadorArchivosT.llenarDatos(0.001f * tiempo, AlmacenDatosRAM.datoActualT);
+
 
     }
     protected void onPause() {

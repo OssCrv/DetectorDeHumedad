@@ -14,10 +14,10 @@ import ossman.simulaciones.detectordehumedad.datos.AlmacenDatosRAM;
 
 public class ActividadConfiguracion extends Activity {
 
-        private EditText editTextMinimo, editTextMaximo, editTextUnidades1,editTextUnidades2, editTextPeriodoMuestreo,
+        private EditText editTextMinimo, editTextMaximo, editTextMinimo2, editTextMaximo2, editTextUnidades1,editTextUnidades2, editTextPeriodoMuestreo,
                 editTextNumeroDatos;
 
-        private TextView textMinimo, textMaximo, textUnidadesH, textUnidadesT, textPeriodoMuestreo, textNumeroDatos,
+        private TextView textMinimo, textMaximo, textMinimo2, textMaximo2, textUnidadesH, textUnidadesT, textPeriodoMuestreo, textNumeroDatos,
                 espacioUno, espacioDos;
 
         private int tamanoLetraResolucionIncluida;
@@ -45,8 +45,15 @@ public class ActividadConfiguracion extends Activity {
             textMinimo.setGravity(Gravity.FILL_VERTICAL);
             textMinimo.setBackgroundColor(Color.GREEN);
             textMinimo.setTextSize(tamanoLetraResolucionIncluida);
-            textMinimo.setText("  VALOR MÍNIMO");
+            textMinimo.setText("  VALOR MÍNIMO HUMEDAD");
             textMinimo.setTextColor(Color.BLACK);
+
+            textMinimo2 = new TextView(this);
+            textMinimo2.setGravity(Gravity.FILL_VERTICAL);
+            textMinimo2.setBackgroundColor(Color.GREEN);
+            textMinimo2.setTextSize(tamanoLetraResolucionIncluida);
+            textMinimo2.setText("  VALOR MÍNIMO TEMPERATURA");
+            textMinimo2.setTextColor(Color.BLACK);
 
             espacioUno = new TextView(this);
             espacioUno.setTextSize(tamanoLetraResolucionIncluida);
@@ -60,8 +67,15 @@ public class ActividadConfiguracion extends Activity {
             textMaximo.setGravity(Gravity.FILL_VERTICAL);
             textMaximo.setBackgroundColor(Color.YELLOW);
             textMaximo.setTextSize(tamanoLetraResolucionIncluida);
-            textMaximo.setText("  VALOR MÁXIMO");
+            textMaximo.setText("  VALOR MÁXIMO HUMEDAD");
             textMaximo.setTextColor(Color.BLACK);
+
+            textMaximo2 = new TextView(this);
+            textMaximo2.setGravity(Gravity.FILL_VERTICAL);
+            textMaximo2.setBackgroundColor(Color.YELLOW);
+            textMaximo2.setTextSize(tamanoLetraResolucionIncluida);
+            textMaximo2.setText("  VALOR MÁXIMO TEMPERATURA");
+            textMaximo2.setTextColor(Color.BLACK);
 
             textUnidadesH = new TextView(this);
             textUnidadesH.setGravity(Gravity.FILL_VERTICAL);
@@ -100,6 +114,16 @@ public class ActividadConfiguracion extends Activity {
             editTextMaximo.setKeyListener(DigitsKeyListener.getInstance(true, false)); // positive/negative integer numbers.
             editTextMaximo.setTextSize(tamanoLetraResolucionIncluida);
             editTextMaximo.setText("" + AlmacenDatosRAM.maximo);
+
+            editTextMinimo2 = new EditText(this);
+            editTextMinimo2.setKeyListener(DigitsKeyListener.getInstance(true, false)); // positive/negative integer numbers.
+            editTextMinimo2.setTextSize(tamanoLetraResolucionIncluida);
+            editTextMinimo2.setText("" + AlmacenDatosRAM.minimo2);
+
+            editTextMaximo2 = new EditText(this);
+            editTextMaximo2.setKeyListener(DigitsKeyListener.getInstance(true, false)); // positive/negative integer numbers.
+            editTextMaximo2.setTextSize(tamanoLetraResolucionIncluida);
+            editTextMaximo2.setText("" + AlmacenDatosRAM.maximo2);
 
             //Edita unidades gauge grande
             editTextUnidades1 = new EditText(this);
@@ -178,10 +202,23 @@ public class ActividadConfiguracion extends Activity {
             //para definir el peso de los elementos que se agregaran a esta fila
             linearFilaCinco.setWeightSum(3.0f);
 
+            LinearLayout linearFilaNueve = new LinearLayout(this);
+            linearFilaNueve.setOrientation(LinearLayout.HORIZONTAL);
+            //para definir el peso de los elementos que se agregaran a esta fila
+            linearFilaNueve.setWeightSum(3.0f);
+
+            LinearLayout linearFilaDiez = new LinearLayout(this);
+            linearFilaDiez.setOrientation(LinearLayout.HORIZONTAL);
+            //para definir el peso de los elementos que se agregaran a esta fila
+            linearFilaDiez.setWeightSum(3.0f);
+
+
             linearLayoutPrincipal.addView(linearFilaUno);
             linearLayoutPrincipal.addView(linearFilaDos);
             linearLayoutPrincipal.addView(linearFilaTres);
             linearLayoutPrincipal.addView(linearFilaCuatro);
+            linearLayoutPrincipal.addView(linearFilaNueve);
+            linearLayoutPrincipal.addView(linearFilaDiez);
             linearLayoutPrincipal.addView(linearFilaCinco);
             linearLayoutPrincipal.addView(linearFilaOcho);
             linearLayoutPrincipal.addView(linearFilaSeis);
@@ -215,6 +252,11 @@ public class ActividadConfiguracion extends Activity {
             LinearLayout.LayoutParams parametrosPegadoElementosFilaCuatroDerecha = new LinearLayout.LayoutParams(0, android.view.ViewGroup.LayoutParams.MATCH_PARENT);
             parametrosPegadoElementosFilaCuatroDerecha.weight = 1.0f;
             linearFilaCuatro.addView(editTextMaximo,parametrosPegadoElementosFilaCuatroDerecha);
+
+            linearFilaNueve.addView(textMinimo2,parametrosPegadoElementosFilaTresIzquierda);
+            linearFilaNueve.addView(editTextMinimo2,parametrosPegadoElementosFilaTresDerecha);
+            linearFilaDiez.addView(textMaximo2,parametrosPegadoElementosFilaCuatroIzquierda);
+            linearFilaDiez.addView(editTextMaximo2,parametrosPegadoElementosFilaCuatroDerecha);
 
 
             //pegado de elementos a fila cinco
@@ -264,6 +306,12 @@ public class ActividadConfiguracion extends Activity {
 
             String valorMaximo = editTextMaximo.getText().toString();
             AlmacenDatosRAM.maximo = Integer.parseInt(valorMaximo);
+            String valorMinimo2 = editTextMinimo2.getText().toString();
+            AlmacenDatosRAM.minimo2 = Integer.parseInt(valorMinimo2);
+
+            String valorMaximo2 = editTextMaximo2.getText().toString();
+            AlmacenDatosRAM.maximo2 = Integer.parseInt(valorMaximo2);
+
 
             String valorMuestreo = editTextPeriodoMuestreo.getText().toString();
             AlmacenDatosRAM.periodoMuestreo = Integer.parseInt(valorMuestreo);
