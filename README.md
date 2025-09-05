@@ -1,19 +1,80 @@
-## Detector de humedad
 
-Este proyecto consta de dos módulos. Uno encargado de la recolección y envio de datos; y el otro encargado de recibir los datos, mostrarlos en forma de tabla, gráfico y gauge además de guardarlos en un archivo txt. 
+# 🚀 Detector de Humedad y Temperatura vía Bluetooth
 
-El otro módulo consta de la recolección de datos usando un sensor DTH11 (Sensor de humedad y temperatura), un módulo bluetooth para la transmisión de datos y un Arduino Uno para la comunicación entre el sensor y el modulo bluetooth para el envio de datos bien estructurados.
+Este proyecto consta de dos módulos que trabajan en conjunto para monitorear en tiempo real las condiciones ambientales de un entorno controlado, como un cultivo hidropónico:
 
-Este módulo es un aplicativo móvil desarrollado en el lenguaje Java con el IDE de Android Studio. La principal tarea es la de recolectar los datos que luego pueden visualizarse de varias maneras.
+## 📡 Módulo 1: Recolección y transmisión de datos
 
-Aquí obtenemos los datos de humedad y temperatura cada segundo; también se pueden observar en un gráfico dónde tenemos dos curvas, una de temperatura vs tiempo y otra de humedad vs tiempo; además tenemos un Gauge con rangos de advertencia, peligro además de un rango en el cual es deseable que se mantengan los datos.
+- Sensor DHT11 (humedad y temperatura)
+- Módulo Bluetooth (HC-05)
+- Microcontrolador Arduino UNO
+- Envío de datos estructurados cada segundo
 
-Finalmente tenemos una pantalla donde podemos observar las tres interfaces para mostrar los datos. 
+## 📱 Módulo 2: Visualización y almacenamiento
 
-## Posibles adaptaciones
+- Aplicación móvil en **Java** (Android Studio)
+- Recepción de datos vía Bluetooth
+- Visualización de:
+  - Tabla en tiempo real
+  - Gráfico con curvas de humedad y temperatura
+  - Gauge con zonas de advertencia, peligro y óptimo
+- Guardado de datos en archivo `.txt` local
 
-La aplicación puede ser adaptada para obtener datos de cualquier otro medio que los envie mediante bluetooth o incluso datos de los sensores del dispositivo que alberga la aplicación.
+---
 
-## Contexto del proyecto
+## 📲 Interfaz de la app móvil
 
-El proyecto fue realizado como proyecto final de la materia de Simulaciones la cuál es una de las instrumentaciones que se ven al final de la carrera de ingeniería física. El proyecto estaba dirigido al control de un cultivo hidropónico, el objetivo era luego acoplarlo a un módulo de riego para mantener la humedad del cultivo en niveles óptimos.
+La aplicación fue diseñada para ser intuitiva y útil en campo:
+
+- **Pantalla principal**: interfaz con tres visualizaciones simultáneas
+- **Curvas dinámicas**: temperatura vs tiempo y humedad vs tiempo
+- **Indicador Gauge**: evaluación visual inmediata del estado ambiental
+
+---
+
+## 🔄 Posibles adaptaciones
+
+Este sistema puede adaptarse fácilmente para:
+
+- Recibir datos de **otros sensores externos vía Bluetooth**
+- Usar **sensores internos del teléfono (acelerómetro, temperatura, etc.)**
+- Controlar actuadores (como módulos de riego o ventilación)
+- Integrarse con plataformas de IoT o dashboards en la nube
+
+---
+
+## 🧪 Contexto del proyecto
+
+Este prototipo fue desarrollado como proyecto final de la materia **Simulaciones**, en el último año de Ingeniería Física (Universidad Nacional de Colombia).
+
+Su propósito era servir como **módulo de monitoreo ambiental en un cultivo hidropónico**, y eventualmente integrarse con un sistema de riego automatizado para mantener niveles óptimos de humedad.
+
+---
+
+## 📸 Galería / Capturas
+
+> _[Aquí podés subir imágenes de: montaje del hardware, interfaz de la app, pantallas del gráfico y gauge]_
+
+---
+
+## 🛠️ Tecnologías utilizadas
+
+- Arduino UNO
+- Sensor DHT11
+- Módulo HC-05 (Bluetooth)
+- Android Studio
+- Java
+- XML para UI
+
+---
+
+## 📌 ¿Por qué es relevante?
+
+Este proyecto demuestra habilidades en:
+
+| Área                  | Competencias                                                                 |
+|-----------------------|------------------------------------------------------------------------------|
+| **Hardware**          | Integración de sensores físicos, microcontroladores, transmisión inalámbrica |
+| **Software**          | Desarrollo móvil nativo en Java, visualización de datos, UX básica           |
+| **Comunicación de datos** | Serial + Bluetooth                                                       |
+| **Pensamiento aplicado**  | Aplicación real en agricultura de precisión                            |
