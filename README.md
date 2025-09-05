@@ -51,12 +51,6 @@ Su propósito era servir como **módulo de monitoreo ambiental en un cultivo hid
 
 ---
 
-## 📸 Galería / Capturas
-
-> _[Aquí podés subir imágenes de: montaje del hardware, interfaz de la app, pantallas del gráfico y gauge]_
-
----
-
 ## 🛠️ Tecnologías utilizadas
 
 - Arduino UNO
